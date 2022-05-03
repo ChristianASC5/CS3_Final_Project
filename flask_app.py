@@ -27,16 +27,16 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(4096))
 
-@app.route('/', methods=["GET", "POST"])
-def index():
+@app.route('/create/', methods=["GET", "POST"])
+def create():
     if request.method == "GET":
         return render_template("index.html", comments=Comment.query.all())
 
     comment = Comment(content=request.form["contents"])
     db.session.add(comment)
     db.session.commit()
-    return redirect(url_for("index"))
+    return redirect(url_for("create"))
 
-@app.route("/login/")
-def login():
-    return render_template("login.html")
+@app.route("/")
+def index():
+    return render_template("front_page.html")
